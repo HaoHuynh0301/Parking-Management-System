@@ -19,11 +19,19 @@ public class timerActivity extends TimerTask {
         this.j_out.setIcon(new ImageIcon("src/media/noimg.png"));
     }
 
-    public JLabel getJ() {
+    public JLabel getJ_in() {
         return j_in;
     }
 
-    public void setJ(JLabel j) {
-        this.j_in = j;
+    public void setJ_in(JLabel j_in) {
+        this.j_in = j_in;
+    }
+
+    public JLabel getJ_out() {
+        return j_out;
+    }
+
+    public void setJ_out(JLabel j_out) {
+        this.j_out = j_out;
     }
 }
