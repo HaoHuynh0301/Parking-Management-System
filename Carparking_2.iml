@@ -10,13 +10,21 @@
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
+          <root url="jar://$MODULE_DIR$/../Webcam/webcam-capture-0.3.12.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="library" name="bridj-0.7.0" level="project" />
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
           <root url="jar://$MODULE_DIR$/mysql-connector-java-8.0.22.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" exported="" name="slf4j-api-1.7.2" level="project" />
-    <orderEntry type="library" name="webcam-capture-0.3.12" level="project" />
   </component>
 </module>

@@ -19,10 +19,6 @@ public class timerActivity extends TimerTask {
         this.j_out.setIcon(new ImageIcon("src/media/noimg.png"));
     }
 
-    @Override
-    public void close() {
-
-    }
     public JLabel getJ() {
         return j_in;
     }
