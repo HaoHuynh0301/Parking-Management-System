@@ -32,8 +32,8 @@ public class Screen extends JFrame{
     private static boolean Flag = true;
     private functions f = new functions();
     private Imagetaker t = new Imagetaker();
-    private timerActivity timer_both = new timerActivity(img_capture_in, img_capture_out);
-    private Timer timer_count = new Timer();
+    private timerActivity myTask = new timerActivity(img_capture_in, img_capture_out);
+    private Timer timer = new Timer();
 
     private String code = new String();
 
@@ -70,7 +70,9 @@ public class Screen extends JFrame{
                     t.imageCapture(webcam, img_capture_in);
                     t.saveImage(webcam);
 
-                    timer_count.schedule(timer_both, 0, 3000);
+//                    timer.schedule(myTask, 0, 3000);
+//                    timer.cancel();
+
                 }
             }
         });
@@ -91,9 +93,9 @@ public class Screen extends JFrame{
                 } else {
                     if(txt_code.getText().equals(code)) {
                         txt_code.setText("");
-                        t.getImages(webcam, img_capture_out);
+                        t.setImages(webcam, img_capture_in);
+                        t.imageCapture(webcam, img_capture_out);
 
-                        timer_count.schedule(timer_both, 1000, 3000);
                     } else {
                         JOptionPane.showMessageDialog(null, "Mã số không hợp lệ", "Thông báo", JOptionPane.ERROR_MESSAGE);
                     }

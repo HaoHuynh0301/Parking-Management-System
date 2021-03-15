@@ -52,7 +52,7 @@ public class Imagetaker {
         }
     }
 
-    public void getImages(Webcam webcam, JLabel j) {
+    public void setImages(Webcam webcam, JLabel j) {
         functions f = new functions();
         try {
             Image img = ImageIO.read(new File("test.jpg"));
