@@ -70,7 +70,7 @@ public class Screen extends JFrame{
                     t.imageCapture(webcam, img_capture_in);
                     t.saveImage(webcam);
 
-                    timer_count.schedule(timer_both, 3000);
+                    timer_count.schedule(timer_both, 0, 3000);
                 }
             }
         });
@@ -93,7 +93,7 @@ public class Screen extends JFrame{
                         txt_code.setText("");
                         t.getImages(webcam, img_capture_out);
 
-                        timer_count.schedule(timer_both, 3000);
+                        timer_count.schedule(timer_both, 1000, 3000);
                     } else {
                         JOptionPane.showMessageDialog(null, "Mã số không hợp lệ", "Thông báo", JOptionPane.ERROR_MESSAGE);
                     }
