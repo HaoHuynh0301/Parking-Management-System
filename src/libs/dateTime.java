@@ -1,5 +1,18 @@
 package libs;
 
-public class dateTime {
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
+public class dateTime {
+    SimpleDateFormat formatter;
+    Date date;
+
+    public dateTime() {
+        this.formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        this.date = new Date();
+    }
+
+    public String getDateTime() {
+        return this.formatter.format(date);
+    }
 }

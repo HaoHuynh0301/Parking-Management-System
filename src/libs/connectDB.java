@@ -42,6 +42,17 @@ public class connectDB {
         return Flag;
     }
 
+    public boolean select_date(String tmp_date, Connection conn) throws SQLException {
+        boolean Flag = false;
+        String query = "SELECT * FROM date_time WHERE date_time.date_time = ?";
+        PreparedStatement stmt = conn.prepareStatement(query);
+        stmt.setString(1, tmp_date);
+        ResultSet rs = stmt.executeQuery();
+        while (rs.next()) {
+            Flag = true;
+        }
+        return Flag;
+    }
 
     public ResultSet selection(String item, Connection conn) throws SQLException {
         String query = "SELECT * FROM " + item;

@@ -45,7 +45,11 @@ public class Screen extends JFrame{
     private Imagetaker t = new Imagetaker();
     private timerActivity myTask = new timerActivity(img_capture_in, img_capture_out);
 
+    private dateTime dt = new dateTime();
+
     private Timer timer = new Timer();
+
+    private fileActivity file = new fileActivity();
 
     private String code = new String();
 
@@ -68,14 +72,24 @@ public class Screen extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 new Videotaker(webcam, Flag, image_holder).start();
                 btn_start.setText("KẾT THÚC");
-
             }
         });
 
         btn_parking.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
                 String tmp_code = txt_code.getText();
+
+                try {
+                    boolean Flag_dateTime = connect.select_date(dt.getDateTime(), conn);
+                    if(Flag_dateTime == false) {
+                        String tmp_datetime = dt.getDateTime().replaceAll("\\s+","");
+                        file.createFolder(tmp_datetime);
+                    }
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
 
                 if("".equals(tmp_code)) {
                     JOptionPane.showMessageDialog(null, "Nhập vào mã số", "Thông báo", JOptionPane.ERROR_MESSAGE);
