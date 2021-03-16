@@ -1,8 +1,6 @@
 package libs;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class connectDB {
     private String dbName;
@@ -15,7 +13,7 @@ public class connectDB {
         this.password = password;
     }
 
-    public void connection(Connection conn){
+    public Connection connection(Connection conn){
         try {
             Class.forName("com.mysql.cj.jdbc.Driver"); //Download JDBC
             String url = "jdbc:mysql://localhost:3306/car";// your db name
@@ -25,9 +23,36 @@ public class connectDB {
             if (conn != null) {
                 System.out.println("Connect success!");
             }
+
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
+        return conn;
+    }
+
+    public ResultSet selection(String item, Connection conn) throws SQLException {
+        String query = "SELECT * FROM " + item;
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery(query);
+        return rs;
+    }
+
+    public void insert_card(String tmp_id, int tmp_status, Connection conn) throws SQLException {
+        String query = "INSERT INTO card VALUES (?, ?)";
+        PreparedStatement stmt = conn.prepareStatement(query);
+        stmt.setString(1, tmp_id);
+        stmt.setInt(2, tmp_status);
+        stmt.execute();
+    }
+
+    public void insert_customer(String tmp_id, String tmp_name, int tmp_age, String tmp_moto_code, String tmp_dob, Connection conn) throws SQLException {
+        String query = "INSERT INTO customer VALUES(?, ?, ?, ?, ?)";
+        PreparedStatement stmt = conn.prepareStatement(query);
+        stmt.setString(1, tmp_id);
+        stmt.setString(2, tmp_name);
+        stmt.setInt(3, tmp_age);
+        stmt.setString(4, tmp_moto_code);
+        stmt.setString(5, tmp_dob);
     }
 
     public String getDbName() {

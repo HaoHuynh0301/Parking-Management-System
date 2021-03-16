@@ -1,11 +1,14 @@
 import com.github.sarxos.webcam.Webcam;
 import libs.*;
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -27,6 +30,8 @@ public class Screen extends JFrame{
     private JButton btn_start;
     private JButton btn_signup;
     private JButton btn_clear;
+    private JPanel pannel_login;
+    private JPanel pannel_signup;
     private static Webcam webcam = Webcam.getDefault();
     private Image image;
     private static boolean Flag = true;
@@ -45,6 +50,8 @@ public class Screen extends JFrame{
         this.setContentPane(this.pannel_main);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack();
+
+        pannel_signup.setVisible(false);
 
         createBorder();
         f.Initialization(image_holder, img_capture_in, img_capture_out);
@@ -70,10 +77,16 @@ public class Screen extends JFrame{
                     t.imageCapture(webcam, img_capture_in);
                     t.saveImage(webcam);
 
-//                    timer.schedule(myTask, 0, 3000);
-//                    timer.cancel();
+                    timer.schedule(myTask, 3000);
 
                 }
+            }
+        });
+
+        btn_signup.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
             }
         });
 
@@ -103,6 +116,15 @@ public class Screen extends JFrame{
                 }
             }
         });
+
+        btn_signup.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                pannel_login.setVisible(false);
+                pannel_signup.setVisible(true);
+
+            }
+        });
     }
 
     public static void main(String args[]) {
@@ -111,7 +133,7 @@ public class Screen extends JFrame{
         screen.pack();
         screen.setVisible(true);
         ImageCapture();
-        connect.connection(conn);
+        conn = connect.connection(conn);
     }
 
     private static void ImageCapture() {
@@ -125,6 +147,9 @@ public class Screen extends JFrame{
         pannel_out.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         pannel_infor.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         btn_parking.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-
+        pannel_login.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        pannel_signup.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        pannel_signup.setBorder(BorderFactory.createTitledBorder(
+                BorderFactory.createEtchedBorder(), "Đăng ký", TitledBorder.LEFT, TitledBorder.TOP));
     }
 }
