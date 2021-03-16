@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.Serializable;
+import java.util.Random;
 
 public class functions implements Serializable {
 
@@ -20,5 +21,20 @@ public class functions implements Serializable {
 //        j1.setIcon(new ImageIcon("src/media/noimg.png"));
         j2.setIcon(new ImageIcon("src/media/noimg.png"));
         j3.setIcon(new ImageIcon("src/media/noimg.png"));
+    }
+
+    public String generateAlphabet() {
+        int leftLimit = 48;
+        int rightLimit = 122;
+        int targetStringLength = 10;
+        Random random = new Random();
+
+        String generatedString = random.ints(leftLimit, rightLimit + 1)
+                .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
+                .limit(targetStringLength)
+                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+                .toString();
+
+        return generatedString;
     }
 }

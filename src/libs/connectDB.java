@@ -30,6 +30,14 @@ public class connectDB {
         return conn;
     }
 
+    public ResultSet select_ID(String item, Connection conn) throws SQLException{
+        String query = "SELECT * FROM card WHERE id = " + item;
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery(query);
+        return rs;
+    }
+
+
     public ResultSet selection(String item, Connection conn) throws SQLException {
         String query = "SELECT * FROM " + item;
         Statement stmt = conn.createStatement();
@@ -53,6 +61,7 @@ public class connectDB {
         stmt.setInt(3, tmp_age);
         stmt.setString(4, tmp_moto_code);
         stmt.setString(5, tmp_dob);
+        stmt.execute();
     }
 
     public String getDbName() {

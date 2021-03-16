@@ -45,8 +45,6 @@ public class Screen extends JFrame{
     private Imagetaker t = new Imagetaker();
     private timerActivity myTask = new timerActivity(img_capture_in, img_capture_out);
 
-    private Boolean Flag_Signup = false;
-
     private Timer timer = new Timer();
 
     private String code = new String();
@@ -78,24 +76,27 @@ public class Screen extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 String tmp_code = new String(txt_code.getText());
+
                 if("".equals(tmp_code)) {
                     JOptionPane.showMessageDialog(null, "Nhập vào mã số", "Thông báo", JOptionPane.ERROR_MESSAGE);
                 } else {
-                    code = txt_code.getText();
-                    txt_code.setText("");
-                    t.imageCapture(webcam, img_capture_in);
-                    t.saveImage(webcam);
+                    try {
+                        ResultSet rs = connect.select_ID(tmp_code, conn);
+                        if(rs != null) {
+
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Mã số không hợp lệ", "Thông báo", JOptionPane.ERROR_MESSAGE);
+                        }
+                        txt_code.setText("");
+                        t.imageCapture(webcam, img_capture_in);
+                        t.saveImage(webcam);
+                    } catch (SQLException throwables) {
+                        
+                    }
 
                     timer.schedule(myTask, 3000);
 
                 }
-            }
-        });
-
-        btn_signup.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
             }
         });
 
@@ -129,21 +130,30 @@ public class Screen extends JFrame{
         btn_signup.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(Flag_Signup == true) {
-                    pannel_login.setVisible(true);
-                    pannel_signup.setVisible(false);
-                    Flag_Signup = false;
-                } else {
                     pannel_login.setVisible(false);
                     pannel_signup.setVisible(true);
-                    Flag_Signup = true;
-                }
             }
         });
 
         btn_sigup.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                pannel_login.setVisible(true);
+                pannel_signup.setVisible(false);
+                String tmp_name = txt_name.getText();
+                int tmp_age = Integer.parseInt(txt_age.getText());
+                String tmp_motocode = txt_modecode.getText();
+                String tmp_dob = txt_dob.getText();
+                String ID = f.generateAlphabet();
+
+                try {
+                    connect.insert_card(ID, 1, conn);
+                    connect.insert_customer(ID, tmp_name, tmp_age, tmp_motocode, tmp_dob, conn);
+                    JOptionPane.showMessageDialog(null, "ĐĂNG KÝ THÀNH CÔNG", "Thông báo", JOptionPane.ERROR_MESSAGE);
+
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
 
             }
         });
@@ -171,6 +181,10 @@ public class Screen extends JFrame{
         btn_parking.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         pannel_login.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         pannel_signup.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        btn_quiting.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        btn_clear.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        btn_start.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        btn_signup.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         pannel_signup.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createEtchedBorder(), "Đăng ký", TitledBorder.LEFT, TitledBorder.TOP));
         btn_sigup.setBorder(BorderFactory.createLineBorder(Color.BLACK));
