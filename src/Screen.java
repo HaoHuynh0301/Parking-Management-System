@@ -75,27 +75,26 @@ public class Screen extends JFrame{
         btn_parking.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String tmp_code = new String(txt_code.getText());
+                String tmp_code = txt_code.getText();
 
                 if("".equals(tmp_code)) {
                     JOptionPane.showMessageDialog(null, "Nhập vào mã số", "Thông báo", JOptionPane.ERROR_MESSAGE);
                 } else {
                     try {
-                        ResultSet rs = connect.select_ID(tmp_code, conn);
-                        if(rs != null) {
-
+                        boolean Flag = connect.select_ID(tmp_code, conn);
+                        if(Flag == true) {
+                            code = tmp_code;
+                            txt_code.setText("");
+                            t.imageCapture(webcam, img_capture_in);
+                            t.saveImage(webcam);
                         } else {
                             JOptionPane.showMessageDialog(null, "Mã số không hợp lệ", "Thông báo", JOptionPane.ERROR_MESSAGE);
+                            txt_code.setText("");
                         }
-                        txt_code.setText("");
-                        t.imageCapture(webcam, img_capture_in);
-                        t.saveImage(webcam);
+
                     } catch (SQLException throwables) {
-                        
+                        System.out.println(throwables.toString());
                     }
-
-                    timer.schedule(myTask, 3000);
-
                 }
             }
         });
@@ -110,7 +109,9 @@ public class Screen extends JFrame{
         btn_quiting.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
                 String tmp_code = new String(txt_code.getText());
+
                 if("".equals(tmp_code)) {
                     JOptionPane.showMessageDialog(null, "Nhập vào mã số", "Thông báo", JOptionPane.ERROR_MESSAGE);
                 } else {

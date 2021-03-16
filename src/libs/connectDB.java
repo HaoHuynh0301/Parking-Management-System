@@ -30,11 +30,16 @@ public class connectDB {
         return conn;
     }
 
-    public ResultSet select_ID(String item, Connection conn) throws SQLException{
-        String query = "SELECT * FROM card WHERE id = " + item;
-        Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery(query);
-        return rs;
+    public boolean select_ID(String item, Connection conn) throws SQLException {
+        boolean Flag = false;
+        String query = "SELECT * FROM card WHERE card.id = ?";
+        PreparedStatement stmt = conn.prepareStatement(query);
+        stmt.setString(1, item);
+        ResultSet rs = stmt.executeQuery();
+        while (rs.next()) {
+            Flag = true;
+        }
+        return Flag;
     }
 
 
