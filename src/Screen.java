@@ -32,12 +32,21 @@ public class Screen extends JFrame{
     private JButton btn_clear;
     private JPanel pannel_login;
     private JPanel pannel_signup;
+    private JButton btn_sigup;
+    private JPanel pannel_parking;
+    private JTextField txt_name;
+    private JTextField txt_modecode;
+    private JTextField txt_dob;
+    private JTextField txt_age;
     private static Webcam webcam = Webcam.getDefault();
     private Image image;
     private static boolean Flag = true;
     private functions f = new functions();
     private Imagetaker t = new Imagetaker();
     private timerActivity myTask = new timerActivity(img_capture_in, img_capture_out);
+
+    private Boolean Flag_Signup = false;
+
     private Timer timer = new Timer();
 
     private String code = new String();
@@ -120,8 +129,21 @@ public class Screen extends JFrame{
         btn_signup.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                pannel_login.setVisible(false);
-                pannel_signup.setVisible(true);
+                if(Flag_Signup == true) {
+                    pannel_login.setVisible(true);
+                    pannel_signup.setVisible(false);
+                    Flag_Signup = false;
+                } else {
+                    pannel_login.setVisible(false);
+                    pannel_signup.setVisible(true);
+                    Flag_Signup = true;
+                }
+            }
+        });
+
+        btn_sigup.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
 
             }
         });
@@ -151,5 +173,6 @@ public class Screen extends JFrame{
         pannel_signup.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         pannel_signup.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createEtchedBorder(), "Đăng ký", TitledBorder.LEFT, TitledBorder.TOP));
+        btn_sigup.setBorder(BorderFactory.createLineBorder(Color.BLACK));
     }
 }
