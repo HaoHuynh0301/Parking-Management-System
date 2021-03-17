@@ -65,5 +65,10 @@ public class Imagetaker {
         }
     }
 
+//    public void getImageOut(Webcam webcam, JLabel j, String tmp_id) {
+//        functions f = new functions();
+//        String folder_date_name = tmp_id.get
+//        Image img = ImageIO.rea
+//    }
 
 }

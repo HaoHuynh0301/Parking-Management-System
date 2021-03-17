@@ -56,6 +56,17 @@ public class connectDB {
         return Flag;
     }
 
+    public String select_newest_date(String tmp_id, Connection conn) throws SQLException {
+        String tmp_date = "";
+        String query = "SELECT * FROM customer where card_id = ?";
+        PreparedStatement stmt = conn.prepareStatement(query);
+        ResultSet rs = stmt.executeQuery();
+        while (rs.next()) {
+            tmp_date = rs.getString("newest_date");
+        }
+        return tmp_date;
+    }
+
     public ResultSet selection(String item, Connection conn) throws SQLException {
         String query = "SELECT * FROM " + item;
         Statement stmt = conn.createStatement();
@@ -104,13 +115,21 @@ public class connectDB {
 
 
     public void insert_customer(String tmp_id, String tmp_name, int tmp_age, String tmp_moto_code, String tmp_dob, Connection conn) throws SQLException {
-        String query = "INSERT INTO customer VALUES(?, ?, ?, ?, ?)";
+        String query = "INSERT INTO customer VALUES(?, ?, ?, ?, ?, ?)";
         PreparedStatement stmt = conn.prepareStatement(query);
         stmt.setString(1, tmp_id);
         stmt.setString(2, tmp_name);
         stmt.setInt(3, tmp_age);
         stmt.setString(4, tmp_moto_code);
         stmt.setString(5, tmp_dob);
+        stmt.setString(6, "");
+        stmt.execute();
+    }
+
+    public void insert_customer_date_in(String tmp_date, Connection conn) throws SQLException {
+        String query = "INSERT INTO customer(newest_date) VALUES (?)";
+        PreparedStatement stmt = conn.prepareStatement(query);
+        stmt.setString(1, tmp_date);
         stmt.execute();
     }
 
