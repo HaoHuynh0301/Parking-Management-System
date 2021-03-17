@@ -35,17 +35,15 @@ public class Imagetaker {
         j3.setIcon(new ImageIcon("src/media/noimg.png"));
     }
 
-    public void saveImage(Webcam webcam){
+    public void saveImage(Webcam webcam, String folder_user, String folder_datetime){
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
 
         functions f = new functions();
-        Image image = webcam.getImage();
-        Image tmp = f.getScaledImage(image, 300, 200);
 
-        String file_name = new String("src/media/image_" + dtf.format(now) + ".jpg");
+        String file_name = new String("src/data/" + folder_user + "/" + folder_datetime + "/" + dtf.format(now) + ".jpg");
         try{
-            ImageIO.write(webcam.getImage(), "JPG", new File("test.jpg"));
+            ImageIO.write(webcam.getImage(), "JPG", new File(file_name));
         }
         catch (Exception e) {
             System.out.println(e+"");

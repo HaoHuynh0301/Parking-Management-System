@@ -13,6 +13,10 @@ public class dateTime {
     }
 
     public String getDateTime() {
-        return this.formatter.format(date);
+        String tmp_datetime = this.formatter.format(date);
+        tmp_datetime = tmp_datetime.replaceAll("/","");
+        tmp_datetime = tmp_datetime.replaceAll(" ", "");
+        tmp_datetime = tmp_datetime.replaceAll(":", "");
+        return tmp_datetime;
     }
 }

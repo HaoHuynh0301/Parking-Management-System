@@ -46,6 +46,8 @@ public class Screen extends JFrame{
     private timerActivity myTask = new timerActivity(img_capture_in, img_capture_out);
 
     private String general_ID;
+    private String general_code;
+    private String general_datetime;
 
     private dateTime dt = new dateTime();
 
@@ -53,7 +55,6 @@ public class Screen extends JFrame{
 
     private fileActivity file = new fileActivity();
 
-    private String code = new String();
 
     private static Connection conn;
     private static connectDB connect = new connectDB("car", "root", "hao152903");
@@ -83,31 +84,30 @@ public class Screen extends JFrame{
 
                 String tmp_code = txt_code.getText();
 
-                try {
-                    boolean Flag_dateTime = connect.select_date(dt.getDateTime(), conn);
-                    if(Flag_dateTime == false) {
-                        String tmp_datetime = dt.getDateTime().replaceAll("/","");
-                        tmp_datetime = tmp_datetime.replaceAll(" ", "");
-                        tmp_datetime = tmp_datetime.replaceAll(":", "");
-                        connect.insert_datetime(tmp_datetime, conn);
-//                        file.createFolder_date(tmp_datetime);
-                    } else {
-                        System.out.println("Folder was exited");
-                    }
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
-                }
-
                 if("".equals(tmp_code)) {
                     JOptionPane.showMessageDialog(null, "Nhập vào mã số", "Thông báo", JOptionPane.ERROR_MESSAGE);
                 } else {
                     try {
                         boolean Flag = connect.select_ID(tmp_code, conn);
                         if(Flag == true) {
-                            code = tmp_code;
+                            try {
+                                general_datetime = dt.getDateTime();
+                                System.out.println(general_datetime + " " + general_ID);
+                                boolean Flag_dateTime = connect.select_date(general_datetime, conn);
+                                if(Flag_dateTime == false) {
+                                    connect.insert_datetime(general_datetime, conn);
+                                    file.createFolder_date(tmp_code, general_datetime);
+                                } else {
+                                    System.out.println("Folder was exited");
+                                }
+                            } catch (SQLException throwables) {
+                                throwables.printStackTrace();
+                            }
+
+                            general_code = tmp_code;
                             txt_code.setText("");
                             t.imageCapture(webcam, img_capture_in);
-                            t.saveImage(webcam);
+                            t.saveImage(webcam, general_code, general_datetime);
                         } else {
                             JOptionPane.showMessageDialog(null, "Mã số không hợp lệ", "Thông báo", JOptionPane.ERROR_MESSAGE);
                             txt_code.setText("");
@@ -136,7 +136,7 @@ public class Screen extends JFrame{
                 if("".equals(tmp_code)) {
                     JOptionPane.showMessageDialog(null, "Nhập vào mã số", "Thông báo", JOptionPane.ERROR_MESSAGE);
                 } else {
-                    if(txt_code.getText().equals(code)) {
+                    if(txt_code.getText().equals(general_code)) {
                         txt_code.setText("");
                         t.setImages(webcam, img_capture_in);
                         t.imageCapture(webcam, img_capture_out);
@@ -168,7 +168,9 @@ public class Screen extends JFrame{
                 String tmp_dob = txt_dob.getText();
                 String ID = f.generateAlphabet();
                 general_ID = ID;
-                
+
+                System.out.println(ID);
+
                 file.createFolder_user(ID);
 
                 try {

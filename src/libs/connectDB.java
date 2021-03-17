@@ -6,6 +6,7 @@ public class connectDB {
     private String dbName;
     private String userName;
     private String password;
+    private String customer_ID;
 
     public connectDB(String dbName, String userName, String password) {
         this.dbName = dbName;
@@ -38,6 +39,7 @@ public class connectDB {
         ResultSet rs = stmt.executeQuery();
         while (rs.next()) {
             Flag = true;
+            this.customer_ID = rs.getString("id");
         }
         return Flag;
     }
@@ -76,16 +78,8 @@ public class connectDB {
         stmt.execute();
     }
 
-
-    public void insert_customer(String tmp_id, String tmp_name, int tmp_age, String tmp_moto_code, String tmp_dob, Connection conn) throws SQLException {
-        String query = "INSERT INTO customer VALUES(?, ?, ?, ?, ?)";
-        PreparedStatement stmt = conn.prepareStatement(query);
-        stmt.setString(1, tmp_id);
-        stmt.setString(2, tmp_name);
-        stmt.setInt(3, tmp_age);
-        stmt.setString(4, tmp_moto_code);
-        stmt.setString(5, tmp_dob);
-        stmt.execute();
+    public void setCustomer_ID(String customer_ID) {
+        this.customer_ID = customer_ID;
     }
 
     public String getDbName() {
@@ -106,6 +100,22 @@ public class connectDB {
 
     public String getPassword() {
         return password;
+    }
+
+
+    public void insert_customer(String tmp_id, String tmp_name, int tmp_age, String tmp_moto_code, String tmp_dob, Connection conn) throws SQLException {
+        String query = "INSERT INTO customer VALUES(?, ?, ?, ?, ?)";
+        PreparedStatement stmt = conn.prepareStatement(query);
+        stmt.setString(1, tmp_id);
+        stmt.setString(2, tmp_name);
+        stmt.setInt(3, tmp_age);
+        stmt.setString(4, tmp_moto_code);
+        stmt.setString(5, tmp_dob);
+        stmt.execute();
+    }
+
+    public String getCustomer_ID() {
+        return customer_ID;
     }
 
     public void setPassword(String password) {
