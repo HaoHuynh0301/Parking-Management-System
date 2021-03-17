@@ -9,14 +9,29 @@ import java.nio.file.Paths;
 public class fileActivity {
     public fileActivity() {}
 
-    public void createFolder(String folder_name) {
-        File file = new File(folder_name);
-        file.mkdirs();
-        // true if the directory was created, false otherwise
-        if (file.mkdirs()) {
-            System.out.println("Directory is created!");
-        } else {
-            System.out.println("Failed to create directory!");
+    public void createFolder_date(String folder_usesr, String folder_name) {
+        String path = "D:\\Carparking_2\\src\\data\\" + folder_name + "\\";
+        //Creating a File object
+        File file = new File(path);
+        //Creating the directory
+        boolean bool = file.mkdir();
+        if(bool){
+            System.out.println("Directory created successfully");
+        }else{
+            System.out.println("Sorry couldn’t create specified directory");
+        }
+    }
+
+    public void createFolder_user(String folder_name) {
+        String path = "D:\\Carparking_2\\src\\data\\" + folder_name + "\\";
+        //Creating a File object
+        File file = new File(path);
+        //Creating the directory
+        boolean bool = file.mkdir();
+        if(bool){
+            System.out.println("Directory created successfully");
+        }else{
+            System.out.println("Sorry couldn’t create specified directory");
         }
     }
 }

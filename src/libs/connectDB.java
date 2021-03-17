@@ -69,6 +69,14 @@ public class connectDB {
         stmt.execute();
     }
 
+    public void insert_datetime(String tmp_datetime, Connection conn) throws SQLException {
+        String query = "INSERT INTO date_time VALUES(?)";
+        PreparedStatement stmt = conn.prepareStatement(query);
+        stmt.setString(1, tmp_datetime);
+        stmt.execute();
+    }
+
+
     public void insert_customer(String tmp_id, String tmp_name, int tmp_age, String tmp_moto_code, String tmp_dob, Connection conn) throws SQLException {
         String query = "INSERT INTO customer VALUES(?, ?, ?, ?, ?)";
         PreparedStatement stmt = conn.prepareStatement(query);

@@ -45,6 +45,8 @@ public class Screen extends JFrame{
     private Imagetaker t = new Imagetaker();
     private timerActivity myTask = new timerActivity(img_capture_in, img_capture_out);
 
+    private String general_ID;
+
     private dateTime dt = new dateTime();
 
     private Timer timer = new Timer();
@@ -84,8 +86,13 @@ public class Screen extends JFrame{
                 try {
                     boolean Flag_dateTime = connect.select_date(dt.getDateTime(), conn);
                     if(Flag_dateTime == false) {
-                        String tmp_datetime = dt.getDateTime().replaceAll("\\s+","");
-                        file.createFolder(tmp_datetime);
+                        String tmp_datetime = dt.getDateTime().replaceAll("/","");
+                        tmp_datetime = tmp_datetime.replaceAll(" ", "");
+                        tmp_datetime = tmp_datetime.replaceAll(":", "");
+                        connect.insert_datetime(tmp_datetime, conn);
+//                        file.createFolder_date(tmp_datetime);
+                    } else {
+                        System.out.println("Folder was exited");
                     }
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();
@@ -160,6 +167,9 @@ public class Screen extends JFrame{
                 String tmp_motocode = txt_modecode.getText();
                 String tmp_dob = txt_dob.getText();
                 String ID = f.generateAlphabet();
+                general_ID = ID;
+                
+                file.createFolder_user(ID);
 
                 try {
                     connect.insert_card(ID, 1, conn);
