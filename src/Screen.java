@@ -136,7 +136,13 @@ public class Screen extends JFrame{
                 if("".equals(tmp_code)) {
                     JOptionPane.showMessageDialog(null, "Nhập vào mã số", "Thông báo", JOptionPane.ERROR_MESSAGE);
                 } else {
-                    if(txt_code.getText().equals(general_code)) {
+                    boolean tmp_Flag = false;
+                    try {
+                        tmp_Flag = connect.select_ID(txt_code.getText(), conn);
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
+                    if(tmp_Flag == true) {
                         txt_code.setText("");
                         t.setImages(webcam, img_capture_in);
                         t.imageCapture(webcam, img_capture_out);
