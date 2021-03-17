@@ -38,10 +38,14 @@ public class Imagetaker {
     public void saveImage(Webcam webcam, String folder_user, String folder_datetime){
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
+        String tmp_datetime = dtf.format(now);
+        tmp_datetime = tmp_datetime.replaceAll("/","");
+        tmp_datetime = tmp_datetime.replaceAll(" ", "");
+        tmp_datetime = tmp_datetime.replaceAll(":", "");
 
         functions f = new functions();
 
-        String file_name = new String("src/data/" + folder_user + "/" + folder_datetime + "/" + dtf.format(now) + ".jpg");
+        String file_name = "D:\\Carparking_2\\src\\data\\" + folder_user + "\\" + folder_datetime + "\\" + tmp_datetime + ".jpg";
         try{
             ImageIO.write(webcam.getImage(), "JPG", new File(file_name));
         }
