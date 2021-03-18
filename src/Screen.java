@@ -1,10 +1,14 @@
 import com.github.sarxos.webcam.Webcam;
 import libs.*;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -49,7 +53,7 @@ public class Screen extends JFrame{
     private String general_datetime;
     private String general_dateMinute;
 
-    private dateTimeMinute dtm;
+    private dateTimeMinute dtm = new dateTimeMinute();
 
     private dateTime dt = new dateTime();
 
@@ -94,11 +98,10 @@ public class Screen extends JFrame{
                         if(Flag_selecte_ID == true) {
                             try {
                                 general_datetime = dt.getDateTime();
-
+                                general_dateMinute = dtm.getDateTimeMinute();
                                 general_ID = tmp_code;
                                 boolean Flag_dateTime = connect.select_date(general_datetime, general_ID, conn);
                                 if(Flag_dateTime == false) {
-
                                     connect.insert_datetime(general_datetime, general_ID, conn);
                                     file.createFolder_date(tmp_code, general_datetime);
                                 } else {
@@ -107,7 +110,7 @@ public class Screen extends JFrame{
                             } catch (SQLException throwables) {
                                 throwables.printStackTrace();
                             }
-                            connect.update_customer_date_in(general_datetime, conn);
+                            connect.update_customer_date_in(general_dateMinute, conn);
                             txt_code.setText("");
                             t.imageCapture(webcam, img_capture_in);
                             t.saveImage(webcam, general_ID, general_datetime);
@@ -135,21 +138,36 @@ public class Screen extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                String tmp_code = new String(txt_code.getText());
+                String tmp_code = txt_code.getText();
 
                 if("".equals(tmp_code)) {
                     JOptionPane.showMessageDialog(null, "Nhập vào mã số", "Thông báo", JOptionPane.ERROR_MESSAGE);
                 } else {
                     boolean tmp_Flag = false;
                     try {
-                        tmp_Flag = connect.select_ID(txt_code.getText(), conn);
+                        tmp_Flag = connect.select_ID(tmp_code, conn);
                     } catch (SQLException throwables) {
                         throwables.printStackTrace();
                     }
                     if(tmp_Flag == true) {
                         txt_code.setText("");
-                        String
-                        t.setImages(webcam, img_capture_in);
+                        ResultSet tmp_rs = null;
+                        String tmp_dateTimeMinute;
+                        try {
+                            tmp_rs = connect.selection(tmp_code, conn);
+                            while(tmp_rs.next()) {
+                                tmp_dateTimeMinute = tmp_rs.getString("date_time");
+                                System.out.println(tmp_dateTimeMinute);
+                            }
+                        } catch (SQLException throwables) {
+                            throwables.printStackTrace();
+                        }
+                        try {
+                            BufferedImage tmp_img = ImageIO.read(new File("D:\\Carparking_2\\src\\data\\" + tmp_code + "\\" + ));
+                        } catch (IOException ioException) {
+                            ioException.printStackTrace();
+                        }
+                        t.setImages(webcam, ,img_capture_in);
                         t.imageCapture(webcam, img_capture_out);
 
                     } else {

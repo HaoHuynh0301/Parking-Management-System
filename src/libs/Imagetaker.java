@@ -54,7 +54,7 @@ public class Imagetaker {
         }
     }
 
-    public void setImages(Webcam webcam, Image img, JLabel j) {
+    public void setImages(Webcam webcam, BufferedImage img, JLabel j) {
         functions f = new functions();
 
     }
