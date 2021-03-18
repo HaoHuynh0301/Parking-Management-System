@@ -54,15 +54,9 @@ public class Imagetaker {
         }
     }
 
-    public void setImages(Webcam webcam, JLabel j) {
+    public void setImages(Webcam webcam, Image img, JLabel j) {
         functions f = new functions();
-        try {
-            Image img = ImageIO.read(new File("test.jpg"));
-            Image tmp = f.getScaledImage(img, 300, 200);
-            j.setIcon(new ImageIcon(tmp));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
     }
 
 //    public void getImageOut(Webcam webcam, JLabel j, String tmp_id) {

@@ -47,6 +47,9 @@ public class Screen extends JFrame{
 
     private String general_ID;
     private String general_datetime;
+    private String general_dateMinute;
+
+    private dateTimeMinute dtm;
 
     private dateTime dt = new dateTime();
 
@@ -91,9 +94,11 @@ public class Screen extends JFrame{
                         if(Flag_selecte_ID == true) {
                             try {
                                 general_datetime = dt.getDateTime();
+
                                 general_ID = tmp_code;
                                 boolean Flag_dateTime = connect.select_date(general_datetime, general_ID, conn);
                                 if(Flag_dateTime == false) {
+
                                     connect.insert_datetime(general_datetime, general_ID, conn);
                                     file.createFolder_date(tmp_code, general_datetime);
                                 } else {
@@ -143,6 +148,7 @@ public class Screen extends JFrame{
                     }
                     if(tmp_Flag == true) {
                         txt_code.setText("");
+                        String
                         t.setImages(webcam, img_capture_in);
                         t.imageCapture(webcam, img_capture_out);
 
