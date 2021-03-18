@@ -88,8 +88,8 @@ public class Screen extends JFrame{
                     JOptionPane.showMessageDialog(null, "Nhập vào mã số", "Thông báo", JOptionPane.ERROR_MESSAGE);
                 } else {
                     try {
-                        boolean Flag = connect.select_ID(tmp_code, conn);
-                        if(Flag == true) {
+                        boolean Flag_selecte_ID = connect.select_ID(tmp_code, conn);
+                        if(Flag_selecte_ID == true) {
                             try {
                                 general_datetime = dt.getDateTime();
                                 boolean Flag_dateTime = connect.select_date(general_datetime, conn);
@@ -102,7 +102,7 @@ public class Screen extends JFrame{
                             } catch (SQLException throwables) {
                                 throwables.printStackTrace();
                             }
-                            connect.insert_customer_date_in(general_datetime, conn);
+                            connect.update_customer_date_in(general_datetime, conn);
                             general_code = tmp_code;
                             txt_code.setText("");
                             t.imageCapture(webcam, img_capture_in);
@@ -113,6 +113,7 @@ public class Screen extends JFrame{
                         }
 
                     } catch (SQLException throwables) {
+                        System.out.println("Hello");
                         System.out.println(throwables.toString());
                     }
                 }

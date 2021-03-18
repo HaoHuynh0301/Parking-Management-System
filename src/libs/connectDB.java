@@ -126,8 +126,8 @@ public class connectDB {
         stmt.execute();
     }
 
-    public void insert_customer_date_in(String tmp_date, Connection conn) throws SQLException {
-        String query = "INSERT INTO customer(newest_date) VALUES (?)";
+    public void update_customer_date_in(String tmp_date, Connection conn) throws SQLException {
+        String query = "UPDATE customer set newest_date = ?";
         PreparedStatement stmt = conn.prepareStatement(query);
         stmt.setString(1, tmp_date);
         stmt.execute();
