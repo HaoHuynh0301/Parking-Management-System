@@ -152,7 +152,8 @@ public class Screen extends JFrame{
                     if(tmp_Flag == true) {
                         txt_code.setText("");
                         ResultSet tmp_rs = null;
-                        String tmp_dateTimeMinute;
+                        String tmp_dateTimeMinute= "";
+                        String img_path = "";
                         try {
                             tmp_rs = connect.selection(tmp_code, conn);
                             while(tmp_rs.next()) {
@@ -162,12 +163,8 @@ public class Screen extends JFrame{
                         } catch (SQLException throwables) {
                             throwables.printStackTrace();
                         }
-                        try {
-                            BufferedImage tmp_img = ImageIO.read(new File("D:\\Carparking_2\\src\\data\\" + tmp_code + "\\" + ));
-                        } catch (IOException ioException) {
-                            ioException.printStackTrace();
-                        }
-                        t.setImages(webcam, ,img_capture_in);
+                        img_path = "D:\\Carparking_2\\src\\data\\" + tmp_code + "\\" + tmp_dateTimeMinute.substring(0, 9) + "\\" + tmp_dateTimeMinute + ".jpg";
+                        t.setImages(webcam, img_path, img_capture_in);
                         t.imageCapture(webcam, img_capture_out);
 
                     } else {
