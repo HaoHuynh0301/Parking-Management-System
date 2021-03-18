@@ -8,7 +8,7 @@ public class dateTime {
     Date date;
 
     public dateTime() {
-        this.formatter = new SimpleDateFormat("dd/MM/yyyy");
+        this.formatter = new SimpleDateFormat("yyyy/MM/dd");
         this.date = new Date();
     }
 

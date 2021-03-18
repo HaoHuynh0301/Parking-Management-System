@@ -112,8 +112,8 @@ public class Screen extends JFrame{
                             }
                             connect.update_customer_date_in(general_dateMinute, conn);
                             txt_code.setText("");
-                            t.imageCapture(webcam, img_capture_in);
-                            t.saveImage(webcam, general_ID, general_datetime);
+                            t.setImages_Image(webcam, new ImageIcon(webcam.getImage()) ,img_capture_in);
+                            t.saveImage(webcam, general_ID, general_datetime, general_dateMinute);
                         } else {
                             JOptionPane.showMessageDialog(null, "Mã số không hợp lệ", "Thông báo", JOptionPane.ERROR_MESSAGE);
                             txt_code.setText("");
@@ -163,9 +163,9 @@ public class Screen extends JFrame{
                         } catch (SQLException throwables) {
                             throwables.printStackTrace();
                         }
-                        img_path = "D:\\Carparking_2\\src\\data\\" + tmp_code + "\\" + tmp_dateTimeMinute.substring(0, 9) + "\\" + tmp_dateTimeMinute + ".jpg";
-                        t.setImages(webcam, img_path, img_capture_in);
-                        t.imageCapture(webcam, img_capture_out);
+                        System.out.println(tmp_dateTimeMinute.substring(0, 9));
+                        img_path = "D:\\Carparking_2\\src\\data\\" + tmp_code + "\\" + tmp_dateTimeMinute.substring(0, 8) + "\\" + tmp_dateTimeMinute + "_in.jpg";
+                        t.setImages_Path(webcam, img_path, img_capture_in);
 
                     } else {
                         JOptionPane.showMessageDialog(null, "Mã số không hợp lệ", "Thông báo", JOptionPane.ERROR_MESSAGE);
