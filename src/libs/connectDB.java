@@ -44,11 +44,12 @@ public class connectDB {
         return Flag;
     }
 
-    public boolean select_date(String tmp_date, Connection conn) throws SQLException {
+    public boolean select_date(String tmp_date, String ID, Connection conn) throws SQLException {
         boolean Flag = false;
-        String query = "SELECT * FROM date_time WHERE date_time.date_time = ?";
+        String query = "SELECT * FROM date_time WHERE date_time.date_time = ? AND date_time.card_id = ? ";
         PreparedStatement stmt = conn.prepareStatement(query);
         stmt.setString(1, tmp_date);
+        stmt.setString(2, ID);
         ResultSet rs = stmt.executeQuery();
         while (rs.next()) {
             Flag = true;
@@ -82,10 +83,11 @@ public class connectDB {
         stmt.execute();
     }
 
-    public void insert_datetime(String tmp_datetime, Connection conn) throws SQLException {
-        String query = "INSERT INTO date_time VALUES(?)";
+    public void insert_datetime(String tmp_datetime, String ID, Connection conn) throws SQLException {
+        String query = "INSERT INTO date_time VALUES(?, ?)";
         PreparedStatement stmt = conn.prepareStatement(query);
         stmt.setString(1, tmp_datetime);
+        stmt.setString(2, ID);
         stmt.execute();
     }
 

@@ -46,7 +46,6 @@ public class Screen extends JFrame{
     private timerActivity myTask = new timerActivity(img_capture_in, img_capture_out);
 
     private String general_ID;
-    private String general_code;
     private String general_datetime;
 
     private dateTime dt = new dateTime();
@@ -92,9 +91,10 @@ public class Screen extends JFrame{
                         if(Flag_selecte_ID == true) {
                             try {
                                 general_datetime = dt.getDateTime();
-                                boolean Flag_dateTime = connect.select_date(general_datetime, conn);
+                                general_ID = tmp_code;
+                                boolean Flag_dateTime = connect.select_date(general_datetime, general_ID, conn);
                                 if(Flag_dateTime == false) {
-                                    connect.insert_datetime(general_datetime, conn);
+                                    connect.insert_datetime(general_datetime, general_ID, conn);
                                     file.createFolder_date(tmp_code, general_datetime);
                                 } else {
                                     System.out.println("Folder was exited");
@@ -103,10 +103,9 @@ public class Screen extends JFrame{
                                 throwables.printStackTrace();
                             }
                             connect.update_customer_date_in(general_datetime, conn);
-                            general_code = tmp_code;
                             txt_code.setText("");
                             t.imageCapture(webcam, img_capture_in);
-                            t.saveImage(webcam, general_code, general_datetime);
+                            t.saveImage(webcam, general_ID, general_datetime);
                         } else {
                             JOptionPane.showMessageDialog(null, "Mã số không hợp lệ", "Thông báo", JOptionPane.ERROR_MESSAGE);
                             txt_code.setText("");
