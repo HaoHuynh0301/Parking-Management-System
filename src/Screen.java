@@ -157,7 +157,7 @@ public class Screen extends JFrame{
                         try {
                             tmp_rs = connect.selection(tmp_code, conn);
                             while(tmp_rs.next()) {
-                                tmp_dateTimeMinute = tmp_rs.getString("date_time");
+                                tmp_dateTimeMinute = tmp_rs.getString("newest_date");
                                 System.out.println(tmp_dateTimeMinute);
                             }
                         } catch (SQLException throwables) {

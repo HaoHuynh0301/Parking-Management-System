@@ -69,10 +69,10 @@ public class connectDB {
     }
 
     public ResultSet selection(String item, Connection conn) throws SQLException {
-        String query = "SELECT * FROM date_time WHERE card_id = ?";
+        String query = "SELECT * FROM customer WHERE card_id = ?";
         PreparedStatement stmt = conn.prepareStatement(query);
         stmt.setString(1, item);
-        ResultSet rs = stmt.executeQuery(query);
+        ResultSet rs = stmt.executeQuery();
         return rs;
     }
 
