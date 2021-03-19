@@ -57,6 +57,13 @@ public class connectDB {
         return Flag;
     }
 
+    public ResultSet select_list_customer(Connection conn) throws SQLException {
+        String query = "SELECT * FROM customer";
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery(query);
+        return rs;
+    }
+
     public String select_newest_date(String tmp_id, Connection conn) throws SQLException {
         String tmp_date = "";
         String query = "SELECT * FROM customer where card_id = ?";

@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Timer;
 
 public class Screen extends JFrame{
@@ -42,6 +43,9 @@ public class Screen extends JFrame{
     private JButton btn_ad_signin;
     private JButton btn_return;
     private JPanel pannel_list;
+    private JScrollPane panneL_scroll;
+    private JList list_customers;
+    private JButton btn_delete;
     private static Webcam webcam = Webcam.getDefault();
     private Image image;
     private static boolean Flag = true;
@@ -61,6 +65,8 @@ public class Screen extends JFrame{
 
     private fileActivity file = new fileActivity();
 
+    private DefaultListModel list_model = new DefaultListModel();
+
 
     private static Connection conn;
     private static connectDB connect = new connectDB("car", "root", "hao152903");
@@ -74,6 +80,8 @@ public class Screen extends JFrame{
         pannel_signup.setVisible(false);
 
         pannel_manage.setVisible(false);
+
+        pannel_list.setVisible(false);
 
         createBorder();
         f.Initialization(image_holder, img_capture_in, img_capture_out);
@@ -240,6 +248,13 @@ public class Screen extends JFrame{
                     JOptionPane.showMessageDialog(null, "Nhập vào mã số", "Thông báo", JOptionPane.ERROR_MESSAGE);
                 } else if("admin".equals(tmp_usr) || "admin".equals(tmp_pd)) {
                     JOptionPane.showMessageDialog(null, "ĐĂNG NHẬP THÀNH CÔNG", "Thông báo", JOptionPane.ERROR_MESSAGE);
+                    pannel_manage.setVisible(false);
+                    pannel_list.setVisible(true);
+                    try {
+                        selectListCustomer();
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
                 } else {
                     JOptionPane.showMessageDialog(null, "VUI LÒNG NHẬP LẠI THÔNG TIN ĐĂNG NHẬP", "Thông báo", JOptionPane.ERROR_MESSAGE);
                 }
@@ -256,6 +271,14 @@ public class Screen extends JFrame{
         conn = connect.connection(conn);
     }
 
+    private void selectListCustomer() throws SQLException {
+        ResultSet rs = connect.select_list_customer(conn);
+        while(rs.next()) {
+            list_model.addElement(rs.getString("name") + "; " + rs.getString("newest_date"));
+        }
+        list_customers.setModel(list_model);
+    }
+
     private static void ImageCapture() {
         webcam.setViewSize(new Dimension(320, 240));
         webcam.open();
@@ -269,6 +292,7 @@ public class Screen extends JFrame{
         btn_parking.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         pannel_login.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         pannel_signup.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        pannel_list.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         btn_quiting.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         btn_clear.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         btn_start.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -276,8 +300,11 @@ public class Screen extends JFrame{
         btn_manage.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         btn_ad_signin.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         btn_return.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        btn_delete.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         pannel_signup.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createEtchedBorder(), "Đăng ký", TitledBorder.LEFT, TitledBorder.TOP));
+        pannel_list.setBorder(BorderFactory.createTitledBorder(
+                BorderFactory.createEtchedBorder(), "Danh sách", TitledBorder.LEFT, TitledBorder.TOP));
         pannel_manage.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createEtchedBorder(), "Quản lý", TitledBorder.LEFT, TitledBorder.TOP));
         btn_sigup.setBorder(BorderFactory.createLineBorder(Color.BLACK));
