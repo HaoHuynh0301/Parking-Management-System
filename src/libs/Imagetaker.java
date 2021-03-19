@@ -50,6 +50,19 @@ public class Imagetaker {
             System.out.println(e+"");
         }
     }
+    public void saveImage_out(Webcam webcam, String folder_user, String folder_datetime, String file_name_dateTimMinute){
+        file_name_dateTimMinute = file_name_dateTimMinute.replaceAll("/","");
+        file_name_dateTimMinute = file_name_dateTimMinute.replaceAll(" ", "");
+        file_name_dateTimMinute = file_name_dateTimMinute.replaceAll(":", "");
+
+        String file_name = "D:\\Carparking_2\\src\\data\\" + folder_user + "\\" + folder_datetime + "\\" + file_name_dateTimMinute + "_out.jpg";
+        try{
+            ImageIO.write(webcam.getImage(), "JPG", new File(file_name));
+        }
+        catch (Exception e) {
+            System.out.println(e+"");
+        }
+    }
 
     public void setImages_Path(Webcam webcam, String tmp_path, JLabel j) {
         System.out.println(tmp_path);

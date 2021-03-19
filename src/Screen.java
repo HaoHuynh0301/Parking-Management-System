@@ -41,6 +41,7 @@ public class Screen extends JFrame{
     private JTextField txt_ad_pw;
     private JButton btn_ad_signin;
     private JButton btn_return;
+    private JPanel pannel_list;
     private static Webcam webcam = Webcam.getDefault();
     private Image image;
     private static boolean Flag = true;
@@ -167,6 +168,8 @@ public class Screen extends JFrame{
                         System.out.println(tmp_dateTimeMinute.substring(0, 8));
                         img_path = "D:\\Carparking_2\\src\\data\\" + tmp_code + "\\" + tmp_dateTimeMinute.substring(0, 8) + "\\" + tmp_dateTimeMinute + "_in.jpg";
                         t.setImages_Path(webcam, img_path, img_capture_in);
+                        t.setImages_Image(webcam, new ImageIcon(webcam.getImage()), img_capture_out);
+                        t.saveImage_out(webcam, tmp_code, tmp_dateTimeMinute.substring(0, 8), tmp_dateTimeMinute);
 
                     } else {
                         JOptionPane.showMessageDialog(null, "Mã số không hợp lệ", "Thông báo", JOptionPane.ERROR_MESSAGE);
@@ -203,7 +206,7 @@ public class Screen extends JFrame{
                 try {
                     connect.insert_card(ID, 1, conn);
                     connect.insert_customer(ID, tmp_name, tmp_age, tmp_motocode, tmp_dob, conn);
-                    JOptionPane.showMessageDialog(null, "ĐĂNG KÝ THÀNH CÔNG", "Thông báo", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "ĐĂNG KÝ THÀNH CÔNG. MÃ SỐ XE CỦA BẠN LÀ: " + ID, "Thông báo", JOptionPane.ERROR_MESSAGE);
 
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();
