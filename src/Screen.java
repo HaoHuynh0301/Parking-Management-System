@@ -1,21 +1,14 @@
 import com.github.sarxos.webcam.Webcam;
 import libs.*;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.format.DateTimeFormatter;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Timer;
 
 public class Screen extends JFrame{
@@ -42,6 +35,12 @@ public class Screen extends JFrame{
     private JTextField txt_modecode;
     private JTextField txt_dob;
     private JTextField txt_age;
+    private JButton btn_manage;
+    private JPanel pannel_manage;
+    private JTextField txt_ad_usr;
+    private JTextField txt_ad_pw;
+    private JButton btn_ad_signin;
+    private JButton btn_return;
     private static Webcam webcam = Webcam.getDefault();
     private Image image;
     private static boolean Flag = true;
@@ -72,6 +71,8 @@ public class Screen extends JFrame{
         this.pack();
 
         pannel_signup.setVisible(false);
+
+        pannel_manage.setVisible(false);
 
         createBorder();
         f.Initialization(image_holder, img_capture_in, img_capture_out);
@@ -163,7 +164,7 @@ public class Screen extends JFrame{
                         } catch (SQLException throwables) {
                             throwables.printStackTrace();
                         }
-                        System.out.println(tmp_dateTimeMinute.substring(0, 9));
+                        System.out.println(tmp_dateTimeMinute.substring(0, 8));
                         img_path = "D:\\Carparking_2\\src\\data\\" + tmp_code + "\\" + tmp_dateTimeMinute.substring(0, 8) + "\\" + tmp_dateTimeMinute + "_in.jpg";
                         t.setImages_Path(webcam, img_path, img_capture_in);
 
@@ -210,6 +211,37 @@ public class Screen extends JFrame{
 
             }
         });
+
+        btn_manage.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(null, "ĐĂNG NHẬP VỚI QUYỀN QUẢN LÝ", "Thông báo", JOptionPane.ERROR_MESSAGE);
+                pannel_login.setVisible(false);
+                pannel_manage.setVisible(true);
+            }
+        });
+        btn_return.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                pannel_manage.setVisible(false);
+                pannel_login.setVisible(true);
+            }
+        });
+
+        btn_ad_signin.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String tmp_usr = txt_ad_usr.getText();
+                String tmp_pd = txt_ad_pw.getText();
+                if("".equals(tmp_usr) || "".equals(tmp_pd)) {
+                    JOptionPane.showMessageDialog(null, "Nhập vào mã số", "Thông báo", JOptionPane.ERROR_MESSAGE);
+                } else if("admin".equals(tmp_usr) || "admin".equals(tmp_pd)) {
+                    JOptionPane.showMessageDialog(null, "ĐĂNG NHẬP THÀNH CÔNG", "Thông báo", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, "VUI LÒNG NHẬP LẠI THÔNG TIN ĐĂNG NHẬP", "Thông báo", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
     }
 
     public static void main(String args[]) {
@@ -238,8 +270,13 @@ public class Screen extends JFrame{
         btn_clear.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         btn_start.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         btn_signup.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        btn_manage.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        btn_ad_signin.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        btn_return.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         pannel_signup.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createEtchedBorder(), "Đăng ký", TitledBorder.LEFT, TitledBorder.TOP));
+        pannel_manage.setBorder(BorderFactory.createTitledBorder(
+                BorderFactory.createEtchedBorder(), "Quản lý", TitledBorder.LEFT, TitledBorder.TOP));
         btn_sigup.setBorder(BorderFactory.createLineBorder(Color.BLACK));
     }
 }

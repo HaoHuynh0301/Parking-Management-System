@@ -14,6 +14,8 @@ public class dateTimeMinute {
 
 
     public String getDateTimeMinute() {
+        this.formatter = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        this.date = new Date();
         String tmp_datetime = this.formatter.format(date);
         tmp_datetime = tmp_datetime.replaceAll("/","");
         tmp_datetime = tmp_datetime.replaceAll(" ", "");
