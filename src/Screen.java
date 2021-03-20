@@ -49,6 +49,7 @@ public class Screen extends JFrame{
     private JList list_customers;
     private JButton btn_delete;
     private JButton btn_list_return;
+    private JButton btn_export;
     private static Webcam webcam = Webcam.getDefault();
     private Image image;
     private static boolean Flag = true;
@@ -337,6 +338,7 @@ public class Screen extends JFrame{
         btn_ad_signin.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         btn_return.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         btn_delete.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        btn_export.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         btn_list_return.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         pannel_signup.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createEtchedBorder(), "Đăng ký", TitledBorder.LEFT, TitledBorder.TOP));
