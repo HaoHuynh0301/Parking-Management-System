@@ -6,6 +6,7 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -134,7 +135,6 @@ public class Screen extends JFrame{
                         }
 
                     } catch (SQLException throwables) {
-                        System.out.println("Hello");
                         System.out.println(throwables.toString());
                     }
                 }
@@ -172,12 +172,10 @@ public class Screen extends JFrame{
                             tmp_rs = connect.selection(tmp_code, conn);
                             while(tmp_rs.next()) {
                                 tmp_dateTimeMinute = tmp_rs.getString("newest_date");
-                                System.out.println(tmp_dateTimeMinute);
                             }
                         } catch (SQLException throwables) {
                             throwables.printStackTrace();
                         }
-                        System.out.println(tmp_dateTimeMinute.substring(0, 8));
                         img_path = "D:\\Carparking_2\\src\\data\\" + tmp_code + "\\" + tmp_dateTimeMinute.substring(0, 8) + "\\" + tmp_dateTimeMinute + "_in.jpg";
                         t.setImages_Path(webcam, img_path, img_capture_in);
                         t.setImages_Image(webcam, new ImageIcon(webcam.getImage()), img_capture_out);
@@ -285,8 +283,9 @@ public class Screen extends JFrame{
                     select_value = list_String[0];
                     try {
                         connect.select_Name(select_value, conn);
-                        file.deleteDirectory("D:\\Carparking_2\\src\\data\\" + connect.select_ID_byName(select_value, conn) + "\\");
-                    } catch (SQLException | IOException throwables) {
+                        selectListCustomer();
+
+                    } catch (SQLException throwables) {
                         throwables.printStackTrace();
                     }
                 } else {

@@ -37,18 +37,16 @@ public class fileActivity {
         }
     }
 
-    public void deleteDirectory(String dir) throws IOException {
-        Path path = new Path(dir)
-        file.delete();
-        System.out.println("Files deleted........");
-    }
-
-    public static void deleteDirectoryJava8Extract(Path path) {
-        try {
-            Files.delete(path);
-        } catch (IOException e) {
-            System.err.printf("Unable to delete this path : %s%n%s", path, e);
+    public static boolean deleteDir(File dir) {
+        if (dir.isDirectory()) {
+            String[] children = dir.list();
+            for (int i = 0; i < children.length; i++) {
+                boolean success = deleteDir(new File(dir, children[i]));
+                if (!success) {
+                    return false;
+                }
+            }
         }
+        return dir.delete(); // The directory is empty now and can be deleted.
     }
-
 }
