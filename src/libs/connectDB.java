@@ -110,6 +110,11 @@ public class connectDB {
         return tmp_date;
     }
 
+    public ResultSet select_ParkingTime(Connection conn) {
+        
+    }
+
+
     public ResultSet selection(String item, Connection conn) throws SQLException {
         String query = "SELECT * FROM customer WHERE card_id = ?";
         PreparedStatement stmt = conn.prepareStatement(query);
@@ -157,6 +162,16 @@ public class connectDB {
     public String getPassword() {
         return password;
     }
+
+    public void insertParkingDate(Connection conn, String tmp_dt, String tmp_ID, int tmp_status) throws SQLException {
+        String query = "INSERT INTO parking_datetime VALUES (?, ?, ?)";
+        PreparedStatement stmt = conn.prepareStatement(query);
+        stmt.setString(1, tmp_dt);
+        stmt.setString(2, tmp_ID);
+        stmt.setInt(3, tmp_status);
+        stmt.execute();
+    }
+
 
 
     public void insert_customer(String tmp_id, String tmp_name, int tmp_age, String tmp_moto_code, String tmp_dob, Connection conn) throws SQLException {

@@ -41,7 +41,7 @@ public class Screen extends JFrame{
     private JButton btn_manage;
     private JPanel pannel_manage;
     private JTextField txt_ad_usr;
-    private JTextField txt_ad_pw;
+    private JPasswordField txt_ad_pw;
     private JButton btn_ad_signin;
     private JButton btn_return;
     private JPanel pannel_list;
@@ -126,6 +126,7 @@ public class Screen extends JFrame{
                             } catch (SQLException throwables) {
                                 throwables.printStackTrace();
                             }
+                            connect.insertParkingDate(conn, general_dateMinute, general_ID, 1);
                             connect.update_customer_date_in(general_dateMinute, conn);
                             txt_code.setText("");
                             t.setImages_Image(webcam, new ImageIcon(webcam.getImage()) ,img_capture_in);
@@ -174,6 +175,11 @@ public class Screen extends JFrame{
                             while(tmp_rs.next()) {
                                 tmp_dateTimeMinute = tmp_rs.getString("newest_date");
                             }
+                        } catch (SQLException throwables) {
+                            throwables.printStackTrace();
+                        }
+                        try {
+                            connect.insertParkingDate(conn, dtm.getDateTimeMinute(), general_ID, 2);
                         } catch (SQLException throwables) {
                             throwables.printStackTrace();
                         }
@@ -295,6 +301,27 @@ public class Screen extends JFrame{
             }
         });
 
+        btn_export.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String select_value = "";
+                if(list_customers.getSelectedIndex() != -1) {
+                    select_value = list_customers.getSelectedValue() + "";
+                    String[] list_String = select_value.split(";");
+                    select_value = list_String[0];
+                    try {
+                        String tmp_ID = connect.select_ID_byName(select_value, conn);
+                        file.writterInformation(conn, tmp_ID);
+
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "VUI LÒNG CHỌN NGƯỜI DÙNG", "Thông báo", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+
 
     }
 
@@ -308,6 +335,7 @@ public class Screen extends JFrame{
     }
 
     private void selectListCustomer() throws SQLException {
+        list_model.clear();
         ResultSet rs = connect.select_list_customer(conn);
         while(rs.next()) {
             String tmp_dtm = dtm.getDefaultTimeMinute(rs.getString("newest_date"));

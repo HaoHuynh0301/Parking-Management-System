@@ -1,15 +1,36 @@
 package libs;
 
+import javax.swing.*;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.Connection;
 import java.util.Comparator;
 import java.util.stream.Stream;
 
 public class fileActivity {
     public fileActivity() {}
+
+    public void writterInformation(Connection conn, String customerName) {
+        BufferedWriter writer = null;
+        try {
+            writer = new BufferedWriter(new FileWriter("D:\\Carparking_2\\src\\infor\\" + customerName + ".txt")); //Your folder's path that you wanna save
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
+        try {
+            writer.write("");
+            writer.close();
+            JOptionPane.showMessageDialog(null, "Lưu thành công", "Thông báo", JOptionPane.ERROR_MESSAGE);
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
+    }
+
 
     public void createFolder_date(String folder_usesr, String folder_name) {
         String path = "D:\\Carparking_2\\src\\data\\" + folder_usesr + "\\" + folder_name + "\\";

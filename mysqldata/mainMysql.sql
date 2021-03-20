@@ -29,6 +29,16 @@ CREATE TABLE `card` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+CREATE TABLE parking_datetime (
+	pdate varchar(20) NOT NULL,
+    id varchar(20) NOT NULL,
+    status int not null,
+    PRIMARY KEY(pdate, id),
+    CONSTRAINT FOREIGN KEY (`id`) REFERENCES `card` (`id`) ON DELETE CASCADE  
+);
+
+drop table parking_datetime;
+
 
 use car;
 delete from card;
