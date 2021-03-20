@@ -15,7 +15,7 @@ import java.util.stream.Stream;
 public class fileActivity {
     public fileActivity() {}
 
-    public void writterInformation(Connection conn, String customerName) {
+    public void writterInformation(Connection conn, String customerName, String text) {
         BufferedWriter writer = null;
         try {
             writer = new BufferedWriter(new FileWriter("D:\\Carparking_2\\src\\infor\\" + customerName + ".txt")); //Your folder's path that you wanna save
@@ -23,7 +23,7 @@ public class fileActivity {
             ioException.printStackTrace();
         }
         try {
-            writer.write("");
+            writer.write(text);
             writer.close();
             JOptionPane.showMessageDialog(null, "Lưu thành công", "Thông báo", JOptionPane.ERROR_MESSAGE);
         } catch (IOException ioException) {

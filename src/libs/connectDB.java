@@ -110,8 +110,12 @@ public class connectDB {
         return tmp_date;
     }
 
-    public ResultSet select_ParkingTime(Connection conn) {
-        
+    public ResultSet select_ParkingTime(Connection conn, String tmp_ID) throws SQLException {
+        String query = "SELECT * FROM parking_datetime WHERE parking_datetime.id = ?";
+        PreparedStatement stmt = conn.prepareStatement(query);
+        stmt.setString(1, tmp_ID);
+        ResultSet rs = stmt.executeQuery();
+        return rs;
     }
 
 

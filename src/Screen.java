@@ -305,13 +305,18 @@ public class Screen extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 String select_value = "";
+                String text = "";
                 if(list_customers.getSelectedIndex() != -1) {
                     select_value = list_customers.getSelectedValue() + "";
                     String[] list_String = select_value.split(";");
                     select_value = list_String[0];
                     try {
                         String tmp_ID = connect.select_ID_byName(select_value, conn);
-                        file.writterInformation(conn, tmp_ID);
+                        ResultSet rs = connect.select_ParkingTime(conn, tmp_ID);
+                        while(rs.next()) {
+                            text = text + rs.getString("id") + ";" + rs.getString("pdate") + ";" + rs.getInt("status") + "\n";
+                        }
+                        file.writterInformation(conn, tmp_ID, text);
 
                     } catch (SQLException throwables) {
                         throwables.printStackTrace();
