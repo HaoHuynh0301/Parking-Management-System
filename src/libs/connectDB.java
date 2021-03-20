@@ -1,5 +1,6 @@
 package libs;
 
+import javax.swing.*;
 import java.sql.*;
 
 public class connectDB {
@@ -29,6 +30,40 @@ public class connectDB {
             e.printStackTrace();
         }
         return conn;
+    }
+
+    public String select_ID_byName(String tmp_name, Connection conn)  throws SQLException {
+        String id = "";
+        String query_1 = "SELECT * FROM customer WHERE customer.name = ?";
+        PreparedStatement stmt_1 = conn.prepareStatement(query_1);
+        stmt_1.setString(1, tmp_name);
+        ResultSet rs = stmt_1.executeQuery();
+        while(rs.next()) {
+            id = rs.getString("card_id");
+        }
+        System.out.println(id);
+        return id;
+    }
+
+    public void select_Name(String tmp_name, Connection conn) throws SQLException {
+        String id = "";
+        String query_1 = "SELECT * FROM customer WHERE customer.name = ?";
+        PreparedStatement stmt_1 = conn.prepareStatement(query_1);
+        stmt_1.setString(1, tmp_name);
+        ResultSet rs = stmt_1.executeQuery();
+        while(rs.next()) {
+            id = rs.getString("card_id");
+        }
+        String query = "DELETE FROM card WHERE id = ?";
+        PreparedStatement stmt = conn.prepareStatement(query);
+        stmt.setString(1, id);
+        int rs_2 = stmt.executeUpdate();
+        if(rs_2 != -1) {
+            JOptionPane.showMessageDialog(null, "XÓA THẺ XE THÀNH CÔNG", "Thông báo", JOptionPane.ERROR_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "XÓA THẺ XE KHÔNG THÀNH CÔNG", "Thông báo", JOptionPane.ERROR_MESSAGE);
+
+        }
     }
 
     public boolean select_ID(String item, Connection conn) throws SQLException {

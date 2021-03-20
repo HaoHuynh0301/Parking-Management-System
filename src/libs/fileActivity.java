@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Comparator;
+import java.util.stream.Stream;
 
 public class fileActivity {
     public fileActivity() {}
@@ -34,4 +36,19 @@ public class fileActivity {
             System.out.println("Sorry couldn’t create specified directory");
         }
     }
+
+    public void deleteDirectory(String dir) throws IOException {
+        Path path = new Path(dir)
+        file.delete();
+        System.out.println("Files deleted........");
+    }
+
+    public static void deleteDirectoryJava8Extract(Path path) {
+        try {
+            Files.delete(path);
+        } catch (IOException e) {
+            System.err.printf("Unable to delete this path : %s%n%s", path, e);
+        }
+    }
+
 }

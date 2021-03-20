@@ -29,10 +29,15 @@ CREATE TABLE `card` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+
+use car;
 delete from card;
 delete from customer;
 delete from date_time;
+drop table customer;
 drop table date_time;
+select * from customer;
+select * from date_time;
 select * from card;
 
 --
@@ -58,7 +63,7 @@ CREATE TABLE `customer` (
   `age` int DEFAULT (18),
   `moto_code` varchar(20) NOT NULL,
   `dayofbirth` varchar(10) DEFAULT NULL,
-  `newest_date` varchar(10) DEFAULT NULL,
+  `newest_date` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`card_id`,`name`,`moto_code`),
   CONSTRAINT FOREIGN KEY (`card_id`) REFERENCES `card` (`id`) ON DELETE CASCADE  
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

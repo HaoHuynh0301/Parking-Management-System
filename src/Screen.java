@@ -6,6 +6,7 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -46,6 +47,7 @@ public class Screen extends JFrame{
     private JScrollPane panneL_scroll;
     private JList list_customers;
     private JButton btn_delete;
+    private JButton btn_list_return;
     private static Webcam webcam = Webcam.getDefault();
     private Image image;
     private static boolean Flag = true;
@@ -66,6 +68,8 @@ public class Screen extends JFrame{
     private fileActivity file = new fileActivity();
 
     private DefaultListModel list_model = new DefaultListModel();
+
+    private int selection_index = -1;
 
 
     private static Connection conn;
@@ -239,6 +243,14 @@ public class Screen extends JFrame{
             }
         });
 
+        btn_list_return.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                pannel_list.setVisible(false);
+                pannel_login.setVisible(true);
+            }
+        });
+
         btn_ad_signin.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -248,6 +260,8 @@ public class Screen extends JFrame{
                     JOptionPane.showMessageDialog(null, "Nhập vào mã số", "Thông báo", JOptionPane.ERROR_MESSAGE);
                 } else if("admin".equals(tmp_usr) || "admin".equals(tmp_pd)) {
                     JOptionPane.showMessageDialog(null, "ĐĂNG NHẬP THÀNH CÔNG", "Thông báo", JOptionPane.ERROR_MESSAGE);
+                    txt_ad_usr.setText("");
+                    txt_ad_pw.setText("");
                     pannel_manage.setVisible(false);
                     pannel_list.setVisible(true);
                     try {
@@ -260,6 +274,28 @@ public class Screen extends JFrame{
                 }
             }
         });
+
+        btn_delete.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String select_value = "";
+                if(list_customers.getSelectedIndex() != -1) {
+                    select_value = list_customers.getSelectedValue() + "";
+                    String[] list_String = select_value.split(";");
+                    select_value = list_String[0];
+                    try {
+                        connect.select_Name(select_value, conn);
+                        file.deleteDirectory("D:\\Carparking_2\\src\\data\\" + connect.select_ID_byName(select_value, conn) + "\\");
+                    } catch (SQLException | IOException throwables) {
+                        throwables.printStackTrace();
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "VUI LÒNG CHỌN NGƯỜI DÙNG", "Thông báo", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+
+
     }
 
     public static void main(String args[]) {
@@ -274,7 +310,8 @@ public class Screen extends JFrame{
     private void selectListCustomer() throws SQLException {
         ResultSet rs = connect.select_list_customer(conn);
         while(rs.next()) {
-            list_model.addElement(rs.getString("name") + "; " + rs.getString("newest_date"));
+            String tmp_dtm = dtm.getDefaultTimeMinute(rs.getString("newest_date"));
+            list_model.addElement(rs.getString("name") + "; Gửi xe lần cuối: " + tmp_dtm);
         }
         list_customers.setModel(list_model);
     }
@@ -301,6 +338,7 @@ public class Screen extends JFrame{
         btn_ad_signin.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         btn_return.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         btn_delete.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        btn_list_return.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         pannel_signup.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createEtchedBorder(), "Đăng ký", TitledBorder.LEFT, TitledBorder.TOP));
         pannel_list.setBorder(BorderFactory.createTitledBorder(
