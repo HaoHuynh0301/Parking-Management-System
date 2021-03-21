@@ -1,6 +1,7 @@
 # Carparking-Project-2
 
 - Model sử dụng url: https://github.com/sarxos/webcam-capture
+- Model nhận diện biển số xe URL: 
 
 - Cơ sở dữ liệu sẽ gồm 4 bảng: 
 + card: dùng để lưu dữ liệu cửa thẻ giữ xe, gồm 2 trường là id và status

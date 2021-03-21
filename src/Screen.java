@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Timer;
 
 public class Screen extends JFrame{
+
     private JPanel pannel_main;
     private JPanel pannel_capture;
     private JLabel image_holder;
@@ -50,6 +51,7 @@ public class Screen extends JFrame{
     private JButton btn_delete;
     private JButton btn_list_return;
     private JButton btn_export;
+    private JButton btn_signup_return;
     private static Webcam webcam = Webcam.getDefault();
     private Image image;
     private static boolean Flag = true;
@@ -256,6 +258,18 @@ public class Screen extends JFrame{
             }
         });
 
+        btn_signup_return.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                txt_name.setText("");
+                txt_age.setText("");
+                txt_dob.setText("");
+                txt_modecode.setText("");
+                pannel_signup.setVisible(false);
+                pannel_login.setVisible(true);
+            }
+        });
+
         btn_ad_signin.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -373,6 +387,7 @@ public class Screen extends JFrame{
         btn_delete.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         btn_export.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         btn_list_return.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        btn_signup_return.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         pannel_signup.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createEtchedBorder(), "Đăng ký", TitledBorder.LEFT, TitledBorder.TOP));
         pannel_list.setBorder(BorderFactory.createTitledBorder(
