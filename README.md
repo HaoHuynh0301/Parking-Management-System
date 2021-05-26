@@ -1,4 +1,4 @@
-# Carparking-Project-2
+# Carparking-Management-System
 
 - Model sử dụng url: https://github.com/sarxos/webcam-capture
 - Model nhận diện biển số xe URL: 
