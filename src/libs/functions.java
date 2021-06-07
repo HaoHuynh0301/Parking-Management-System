@@ -18,7 +18,6 @@ public class functions implements Serializable {
     }
 
     public static void Initialization(JLabel j1, JLabel j2, JLabel j3) {
-//        j1.setIcon(new ImageIcon("src/media/noimg.png"));
         j2.setIcon(new ImageIcon("src/media/noimg.png"));
         j3.setIcon(new ImageIcon("src/media/noimg.png"));
     }

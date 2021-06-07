@@ -22,20 +22,13 @@ public class Imagetaker {
         img = new ImageIcon("src/media/noimg.png");
     }
 
-//    public void imageCapture(Webcam webcam, JLabel j) {
-//        functions f = new functions();
-//        Image image = webcam.getImage();
-//        Image tmp = f.getScaledImage(image, 300, 200);
-//        j.setIcon(new ImageIcon(tmp));
-//    }
-
     public void imageClear(JLabel j1, JLabel j2, JLabel j3) {
         j1.setIcon(new ImageIcon("src/media/noimg.png"));
         j2.setIcon(new ImageIcon("src/media/noimg.png"));
         j3.setIcon(new ImageIcon("src/media/noimg.png"));
     }
 
-    public void saveImage(Webcam webcam, String folder_user, String folder_datetime, String file_name_dateTimMinute){
+        public void saveImage(Webcam webcam, String folder_user, String folder_datetime, String file_name_dateTimMinute){
         file_name_dateTimMinute = file_name_dateTimMinute.replaceAll("/","");
         file_name_dateTimMinute = file_name_dateTimMinute.replaceAll(" ", "");
         file_name_dateTimMinute = file_name_dateTimMinute.replaceAll(":", "");
@@ -72,11 +65,5 @@ public class Imagetaker {
     public void setImages_Image(Webcam webcam, ImageIcon img, JLabel j) {
         j.setIcon(img);
     }
-
-//    public void getImageOut(Webcam webcam, JLabel j, String tmp_id) {
-//        functions f = new functions();
-//        String folder_date_name = tmp_id.get
-//        Image img = ImageIO.rea
-//    }
 
 }

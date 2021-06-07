@@ -211,24 +211,24 @@ public class Screen extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 pannel_login.setVisible(true);
                 pannel_signup.setVisible(false);
-                String tmp_name = txt_name.getText();
-                int tmp_age = Integer.parseInt(txt_age.getText());
-                String tmp_motocode = txt_modecode.getText();
-                String tmp_dob = txt_dob.getText();
-                String ID = f.generateAlphabet();
-                general_ID = ID;
-
-                System.out.println(ID);
-
-                file.createFolder_user(ID);
 
                 try {
+                    String tmp_name = txt_name.getText();
+                    int tmp_age = Integer.parseInt(txt_age.getText());
+                    String tmp_motocode = txt_modecode.getText();
+                    String tmp_dob = txt_dob.getText();
+                    String ID = f.generateAlphabet();
+                    general_ID = ID;
+
+                    System.out.println(ID);
+
+                    file.createFolder_user(ID);
                     connect.insert_card(ID, 1, conn);
                     connect.insert_customer(ID, tmp_name, tmp_age, tmp_motocode, tmp_dob, conn);
                     JOptionPane.showMessageDialog(null, "ĐĂNG KÝ THÀNH CÔNG. MÃ SỐ XE CỦA BẠN LÀ: " + ID, "Thông báo", JOptionPane.ERROR_MESSAGE);
 
                 } catch (SQLException throwables) {
-                    throwables.printStackTrace();
+                    JOptionPane.showMessageDialog(null, "ĐĂNG KÝ KHÔNG THÀNH CÔNG. NGƯỜI DÙNG VỚI BIỂN SỐ XE ĐÃ ĐƯỢC ĐĂNG KÝ", "Thông báo", JOptionPane.ERROR_MESSAGE);
                 }
 
             }
@@ -325,12 +325,12 @@ public class Screen extends JFrame{
                     String[] list_String = select_value.split(";");
                     select_value = list_String[0];
                     try {
-                        String tmp_ID = connect.select_ID_byName(select_value, conn);
-                        ResultSet rs = connect.select_ParkingTime(conn, tmp_ID);
-                        while(rs.next()) {
-                            text = text + rs.getString("id") + ";" + rs.getString("pdate") + ";" + rs.getInt("status") + "\n";
-                        }
-                        file.writterInformation(conn, tmp_ID, text);
+                            String tmp_ID = connect.select_ID_byName(select_value, conn);
+                            ResultSet rs = connect.select_ParkingTime(conn, tmp_ID);
+                            while(rs.next()) {
+                                text = text + rs.getString("id") + "; Last parking: " + rs.getString("pdate") + "; status: " + rs.getInt("status") + "\n";
+                            }
+                            file.writterInformation(conn, tmp_ID, text);
 
                     } catch (SQLException throwables) {
                         throwables.printStackTrace();
@@ -357,7 +357,12 @@ public class Screen extends JFrame{
         list_model.clear();
         ResultSet rs = connect.select_list_customer(conn);
         while(rs.next()) {
-            String tmp_dtm = dtm.getDefaultTimeMinute(rs.getString("newest_date"));
+            String tmp_dtm = "";
+            try {
+                tmp_dtm = dtm.getDefaultTimeMinute(rs.getString("newest_date"));
+            } catch (Exception e) {
+                tmp_dtm = "No data";
+            }
             list_model.addElement(rs.getString("name") + "; Gửi xe lần cuối: " + tmp_dtm);
         }
         list_customers.setModel(list_model);
@@ -394,6 +399,13 @@ public class Screen extends JFrame{
                 BorderFactory.createEtchedBorder(), "Danh sách", TitledBorder.LEFT, TitledBorder.TOP));
         pannel_manage.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createEtchedBorder(), "Quản lý", TitledBorder.LEFT, TitledBorder.TOP));
+        pannel_capture.setBorder(BorderFactory.createTitledBorder(
+                BorderFactory.createEtchedBorder(), "Hình ảnh trực tiếp", TitledBorder.LEFT, TitledBorder.TOP));
+        pannel_in.setBorder(BorderFactory.createTitledBorder(
+                BorderFactory.createEtchedBorder(), "Hình ảnh gửi xe", TitledBorder.LEFT, TitledBorder.TOP));
+
+        pannel_out.setBorder(BorderFactory.createTitledBorder(
+                BorderFactory.createEtchedBorder(), "Hình ảnh lấy xe", TitledBorder.LEFT, TitledBorder.TOP));
         btn_sigup.setBorder(BorderFactory.createLineBorder(Color.BLACK));
     }
 }
