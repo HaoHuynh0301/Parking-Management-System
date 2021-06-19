@@ -22,7 +22,7 @@ public class Videotaker extends Thread {
     public void run() {
         while(true) {
             Image image = webcam.getImage();
-            Image tmp = this.f.getScaledImage(image, 600, 400);
+            Image tmp = this.f.getScaledImage(image, 630, 475);
             image_holder.setIcon(new ImageIcon(tmp));
             try {
                 Thread.sleep(70);

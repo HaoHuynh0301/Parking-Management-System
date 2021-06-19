@@ -34,7 +34,7 @@
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
           <grid row="0" column="1" row-span="2" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false">
-            <minimum-size width="400" height="750"/>
+            <minimum-size width="450" height="750"/>
           </grid>
         </constraints>
         <properties/>
@@ -182,7 +182,7 @@
                     </constraints>
                     <properties>
                       <font name="JetBrains Mono" size="16"/>
-                      <text value="Nhập tên"/>
+                      <text value="Tên"/>
                     </properties>
                   </component>
                   <component id="5284f" class="javax.swing.JTextField" binding="txt_name">

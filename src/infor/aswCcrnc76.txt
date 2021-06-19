@@ -1,6 +1,0 @@
-aswCcrnc76; Last parking: 20210320154519; status: 1
-aswCcrnc76; Last parking: 20210320154629; status: 1
-aswCcrnc76; Last parking: 20210320154702; status: 1
-aswCcrnc76; Last parking: 20210320154704; status: 2
-aswCcrnc76; Last parking: 20210325192210; status: 1
-aswCcrnc76; Last parking: 20210325192222; status: 2

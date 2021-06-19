@@ -1,6 +1,0 @@
-S3kxm8TbJB; Last parking: 20210606123740; status: 1
-S3kxm8TbJB; Last parking: 20210606123755; status: 2
-S3kxm8TbJB; Last parking: 20210606124055; status: 1
-S3kxm8TbJB; Last parking: 20210606124105; status: 2
-S3kxm8TbJB; Last parking: 20210606124113; status: 1
-S3kxm8TbJB; Last parking: 20210606124535; status: 2

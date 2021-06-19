@@ -129,7 +129,7 @@ public class Screen extends JFrame{
                                 throwables.printStackTrace();
                             }
                             connect.insertParkingDate(conn, general_dateMinute, general_ID, 1);
-                            connect.update_customer_date_in(general_dateMinute, conn);
+                            connect.update_customer_date_in(general_dateMinute, general_ID , conn);
                             txt_code.setText("");
                             t.setImages_Image(webcam, new ImageIcon(webcam.getImage()) ,img_capture_in);
                             t.saveImage(webcam, general_ID, general_datetime, general_dateMinute);
@@ -225,8 +225,11 @@ public class Screen extends JFrame{
                     file.createFolder_user(ID);
                     connect.insert_card(ID, 1, conn);
                     connect.insert_customer(ID, tmp_name, tmp_age, tmp_motocode, tmp_dob, conn);
-                    JOptionPane.showMessageDialog(null, "ĐĂNG KÝ THÀNH CÔNG. MÃ SỐ XE CỦA BẠN LÀ: " + ID, "Thông báo", JOptionPane.ERROR_MESSAGE);
-
+                    JOptionPane.showMessageDialog(null, "ĐĂNG KÝ THÀNH CÔNG. MÃ SỐ XE CỦA BẠN LÀ: " + ID, "Thông báo", JOptionPane.CANCEL_OPTION);
+                    txt_name.setText("");
+                    txt_age.setText("");
+                    txt_dob.setText("");
+                    txt_modecode.setText("");
                 } catch (SQLException throwables) {
                     JOptionPane.showMessageDialog(null, "ĐĂNG KÝ KHÔNG THÀNH CÔNG. NGƯỜI DÙNG VỚI BIỂN SỐ XE ĐÃ ĐƯỢC ĐĂNG KÝ", "Thông báo", JOptionPane.ERROR_MESSAGE);
                 }
@@ -237,7 +240,7 @@ public class Screen extends JFrame{
         btn_manage.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null, "ĐĂNG NHẬP VỚI QUYỀN QUẢN LÝ", "Thông báo", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "ĐĂNG NHẬP VỚI QUYỀN QUẢN LÝ", "Thông báo", JOptionPane.OK_CANCEL_OPTION);
                 pannel_login.setVisible(false);
                 pannel_manage.setVisible(true);
             }
@@ -277,8 +280,8 @@ public class Screen extends JFrame{
                 String tmp_pd = txt_ad_pw.getText();
                 if("".equals(tmp_usr) || "".equals(tmp_pd)) {
                     JOptionPane.showMessageDialog(null, "Nhập vào mã số", "Thông báo", JOptionPane.ERROR_MESSAGE);
-                } else if("admin".equals(tmp_usr) || "admin".equals(tmp_pd)) {
-                    JOptionPane.showMessageDialog(null, "ĐĂNG NHẬP THÀNH CÔNG", "Thông báo", JOptionPane.ERROR_MESSAGE);
+                } else if("admin".equals(tmp_usr) && "admin".equals(tmp_pd)) {
+                    JOptionPane.showMessageDialog(null, "ĐĂNG NHẬP THÀNH CÔNG", "Thông báo", JOptionPane.CANCEL_OPTION);
                     txt_ad_usr.setText("");
                     txt_ad_pw.setText("");
                     pannel_manage.setVisible(false);
@@ -324,13 +327,14 @@ public class Screen extends JFrame{
                     select_value = list_customers.getSelectedValue() + "";
                     String[] list_String = select_value.split(";");
                     select_value = list_String[0];
+                    String motor_code = list_String[1];
                     try {
                             String tmp_ID = connect.select_ID_byName(select_value, conn);
                             ResultSet rs = connect.select_ParkingTime(conn, tmp_ID);
                             while(rs.next()) {
-                                text = text + rs.getString("id") + "; Last parking: " + rs.getString("pdate") + "; status: " + rs.getInt("status") + "\n";
+                                text = text + select_value + " -" + motor_code + "; Activity at: " + rs.getString("pdate") + "; status: " + rs.getInt("status") + "\n";
                             }
-                            file.writterInformation(conn, tmp_ID, text);
+                            file.writterInformation(conn, select_value, motor_code , text);
 
                     } catch (SQLException throwables) {
                         throwables.printStackTrace();
@@ -363,7 +367,7 @@ public class Screen extends JFrame{
             } catch (Exception e) {
                 tmp_dtm = "No data";
             }
-            list_model.addElement(rs.getString("name") + "; Gửi xe lần cuối: " + tmp_dtm);
+            list_model.addElement(rs.getString("name")+ "; " + rs.getString("moto_code") + "; Gửi xe lần cuối: " + tmp_dtm);
         }
         list_customers.setModel(list_model);
     }

@@ -38,7 +38,7 @@ public class connectDB {
         PreparedStatement stmt_1 = conn.prepareStatement(query_1);
         stmt_1.setString(1, tmp_name);
         ResultSet rs = stmt_1.executeQuery();
-        while(rs.next()) {
+        while (rs.next()) {
             id = rs.getString("card_id");
         }
         System.out.println(id);
@@ -54,9 +54,10 @@ public class connectDB {
         while(rs.next()) {
             id = rs.getString("card_id");
         }
-        String query = "DELETE FROM card WHERE id = ?";
+        String query = "DELETE FROM card WHERE card.id = ?";
         PreparedStatement stmt = conn.prepareStatement(query);
         stmt.setString(1, id);
+
         int rs_2 = stmt.executeUpdate();
         if(rs_2 != -1) {
             JOptionPane.showMessageDialog(null, "XÓA THẺ XE THÀNH CÔNG", "Thông báo", JOptionPane.ERROR_MESSAGE);
@@ -75,7 +76,12 @@ public class connectDB {
         while (rs.next()) {
             Flag = true;
             this.customer_ID = rs.getString("id");
+            System.out.println(rs.getInt("status"));
+            if(rs.getInt("status") == '0') {
+                Flag = false;
+            }
         }
+        System.out.println(Flag);
         return Flag;
     }
 
@@ -190,10 +196,11 @@ public class connectDB {
         stmt.execute();
     }
 
-    public void update_customer_date_in(String tmp_date, Connection conn) throws SQLException {
-        String query = "UPDATE customer set newest_date = ?";
+    public void update_customer_date_in(String tmp_date, String tmp_card_id , Connection conn) throws SQLException {
+        String query = "UPDATE customer set newest_date = ? WHERE customer.card_id = ?";
         PreparedStatement stmt = conn.prepareStatement(query);
         stmt.setString(1, tmp_date);
+        stmt.setString(2, tmp_card_id);
         stmt.execute();
     }
 

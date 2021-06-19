@@ -15,10 +15,10 @@ import java.util.stream.Stream;
 public class fileActivity {
     public fileActivity() {}
 
-    public void writterInformation(Connection conn, String customerName, String text) {
+    public void writterInformation(Connection conn, String customerName, String motor_code ,String text) {
         BufferedWriter writer = null;
         try {
-            writer = new BufferedWriter(new FileWriter("D:\\Carparking_2\\src\\infor\\" + customerName + ".txt")); //Your folder's path that you wanna save
+            writer = new BufferedWriter(new FileWriter("D:\\Carparking_2\\src\\infor\\" + customerName + motor_code + ".txt")); //Your folder's path that you wanna save
         } catch (IOException ioException) {
             ioException.printStackTrace();
         }
