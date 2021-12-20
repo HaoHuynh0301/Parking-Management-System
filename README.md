@@ -1,40 +1,18 @@
 # Carparking-Management-System
 
-- Model sử dụng url: https://github.com/sarxos/webcam-capture
-- Model nhận diện biển số xe URL: 
+- Model using URL: https://github.com/sarxos/webcam-capture
+- Model for recognizing license plates: 
 
-- Cơ sở dữ liệu sẽ gồm 4 bảng: 
-+ card: dùng để lưu dữ liệu cửa thẻ giữ xe, gồm 2 trường là id và status
-+ customer: dùng để lưu thông tin chi tiết của người dùng đăng ký thẻ giữ xe
-+ date_time: dùng để lưu lại thông tin ngày hoạt động của phần mềm, để tạo ra folder
-             dựa trên ngày hiện tại
-+ parking_datetime: dùng để lưu lại thời gian gửi và lấy xe mỗi lần của mỗi người
+- The database will consist of 4 tables: 
++ card: used to save parking card door data, including two fields: id and status
++ customer: used to keep details of users registering for parking cards
++ date_time: used to keep information on the day of operation of the software, to create folders based on the current date.
++ parking_datetime: used to save the time to send and pick up each person's car each time
 
-- Chức năng tạo thẻ xe: Sau khi nhập đầy đủ thông tin, hệ thống sẽ tạo một
-                        mã số thẻ, và đồng thời tạo một folder để chứa hình
-                        ảnh của người đăng ký
+- Car card creation function: After entering complete information, the system will create a card number, and at the same time create a folder to contain the image subscribers' photos
 
-- Chức năng gửi xe: Sau khi hệ thống xác nhận mã số xe người nhập vào đúng,
-                    hệ thống sẽ tiếp tục dò trong bảng date_time xe có sự tồn
-                    tại của ngày hôm nay chưa, nếu chưa thì hệ thống sẽ tự tạo 
-                    folder trong folder của người gửi để lưu lại những hình ảnh
-                    lúc gửi xe trong ngày hôm đó. Hình ảnh được gửi sẽ được lưu
-                    với định dạng tên là ngày cộng với giờ phút giầy _in để phân 
-                    biệt. Đồng thời hệ thống sẽ cập nhật lại trường newest_date trong
-                    bảng customer để có thể quản lý thời giản gửi gần nhất, và đồng 
-                    thời hệ thống sẽ chèn vào bảng parking_datetime thời gian id và status
-                    để tiện sau này có thể in ra được toàn bộ thông tin gửi và lấy xe
+- Parking function: After the system confirms the vehicle number entered correctly, the system will continue to detect in the date_time vehicle with a presence if not, the system will create itself. Folder in sender folder to save images it sent the car that day. The image sent will be saved with the format of the name of the day plus the time of shoes _in to divide part with. At the same time, the system will update the field newest_date in customer panel to be able to manage the nearest sending time, and copper the system time will insert into the parking_datetime id and status time so that you can print out all the information sent and get the car.
                     
-- Chức năng lấy xe: Sau khi hệ thống xác nhận mã số người nhập vào đúng, 
-                    hệ thống sẽ lấy newest_date trong bảng customer với mã
-                    ID do người dùng nhập vào, sau đó lấy ảnh với định dạng tên như trên,
-                    sau đó lưu lại hình ảnh đó với thời gian hiện tại _out. Hệ thống
-                    cũng sẽ chèn thêm vào bảng parking_datetime
+- Car retriever function: After the system confirms the correct input number, the system will take newest_date in the customer table with the code with the user's ID is entered, and then the picture is taken with the name format as above, then save that image with the present time _out. System will also be added to the parking_datetime table.
                     
-- Chức năng quản lý: Nếu muốn truy cập vào chức năng này bắt buộc phải đăng
-                     nhập với quyền admin với username: admin và mật khẩu là
-                     admin. Sau đó sẽ có quyền truy cập vào danh sách gửi và lấy xe
-                     được trích xuất từ bảng parking_datetime. Có thể xóa thẻ nếu 
-                     thấy người dùng lâu không còn hoạt động. Ngoài ra còn có chức năng
-                     trích xuất dữ liệu gửi nhận ra file dạng txt để có thể đối chiếu 
-                     nếu có việc không hay xảy ra
+- Management function: If you want to access this function, it is required to post enter with admin permissions with username: admin and password is Admin. You will then have access to the sending and pick-up list. Extracted from the parking_datetime table. You can delete the card if I see long-term users who are no longer active. There is also a function. extract data sent to recognize text files so that they can be collated if something terrible happens.
